@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <title>Gita Shatabdi Parva</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400&family=Work+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       VARIABLES
+    ========================================================= */
+
+    :root {
+      --bg: #FBF8F2;
+      --ink: #2A2320;
+      --muted: #7A6F63;
+      --gold: #A8792E;
+      --gold-deep: #8A5F1E;
+      --maroon: #7C2222;
+      --line: #E7DFD1;
+    }
+
+
+    /* =========================================================
+       RESET
+    ========================================================= */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      margin: 0;
+      padding: 0;
+
+      scroll-behavior: smooth;
+
+      scroll-snap-type: y mandatory;
+      overscroll-behavior-y: contain;
+
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+
+      background: var(--bg);
+      color: var(--ink);
+
+      font-family: "Work Sans", sans-serif;
+
+      -webkit-font-smoothing: antialiased;
+
+      overflow-x: hidden;
+
+      /* Prevent accidental horizontal movement */
+      overscroll-behavior-x: none;
+    }
+
+    h1,
+    h2,
+    p {
+      margin: 0;
+    }
+
+    h1,
+    h2 {
+      font-family: "Cormorant Garamond", serif;
+    }
+
+
+    /* =========================================================
+       LOADER
+    ========================================================= */
+
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      gap: 22px;
+
+      padding: 24px;
+
+      background:
+        radial-gradient(ellipse at 50% 40%,
+          #14102a 0%,
+          #0a0714 65%,
+          #060309 100%);
+
+      transition: opacity 1s ease;
+    }
+
+    #loader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+
+      width: 3px;
+      height: 3px;
+
+      border-radius: 50%;
+
+      background: #bcd0ff;
+
+      box-shadow:
+        0 0 6px 2px rgba(170, 195, 255, 0.85);
+
+      animation: twinkle 2.4s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+
+      0%,
+      100% {
+        opacity: 0.15;
+        transform: scale(0.6);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.3);
+      }
+    }
+
+    .loader-figure {
+      width: min(82vw, 480px);
+
+      animation: breathe 3.6s ease-in-out infinite;
+    }
+
+    .loader-figure img {
+      display: block;
+
+      width: 100%;
+      height: auto;
+
+      filter:
+        drop-shadow(0 0 34px rgba(110, 130, 255, 0.45));
+    }
+
+    @keyframes breathe {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.025);
+      }
+    }
+
+    .loader-caption {
+      font-family: Georgia, serif;
+      font-style: italic;
+
+      font-size: 0.85rem;
+
+      letter-spacing: 0.03em;
+
+      color: #cbb98a;
+
+      opacity: 0;
+
+      animation: caption-in 1.2s ease forwards;
+      animation-delay: 0.6s;
+    }
+
+    @keyframes caption-in {
+      to {
+        opacity: 1;
+      }
+    }
+
+
+    /* =========================================================
+   FULL SCREEN SECTIONS
+========================================================= */
+
+    .screen {
+      width: 100%;
+
+      height: 100svh;
+      min-height: 100svh;
+
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+
+      border-bottom: 1px solid var(--line);
+
+      overflow: hidden;
+    }
+
+
+    /* =========================================================
+       SCREEN 1 — WELCOME
+    ========================================================= */
+
+    #welcome {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+
+      padding:
+        max(24px, env(safe-area-inset-top)) clamp(20px, 5vw, 48px) max(32px, env(safe-area-inset-bottom));
+    }
+
+    .hero-glow-wrap {
+      position: relative;
+
+      display: inline-block;
+
+      opacity: 0;
+      transform: translateY(14px);
+
+      animation: hero-in 0.9s ease forwards;
+      animation-delay: 0.15s;
+    }
+
+    @keyframes hero-in {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-glow {
+      position: absolute;
+      inset: -15%;
+
+      background:
+        radial-gradient(circle,
+          rgba(232, 170, 70, 0.28) 0%,
+          rgba(232, 170, 70, 0) 68%);
+
+      z-index: -1;
+
+      filter: blur(6px);
+    }
+
+    .hero-image {
+      display: block;
+
+      width: clamp(160px, 45vw, 280px);
+
+      height: auto;
+
+      border-radius: 10px;
+
+      filter:
+        drop-shadow(0 18px 30px rgba(60, 30, 10, 0.20));
+    }
+
+    .hero-title {
+      margin-top: clamp(18px, 3vh, 28px);
+
+      font-size: clamp(2rem, 7vw, 3.2rem);
+
+      line-height: 1.05;
+
+      font-weight: 600;
+
+      color: var(--maroon);
+    }
+
+    .welcome-copy {
+      width: 100%;
+      max-width: 590px;
+
+      margin-top: clamp(16px, 2.5vh, 22px);
+
+      font-size: clamp(0.88rem, 2vw, 1rem);
+
+      line-height: 1.75;
+
+      color: var(--muted);
+    }
+
+    .welcome-copy strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+
+    /* =========================================================
+       BUTTON
+    ========================================================= */
+
+    .btn {
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      min-height: 46px;
+
+      padding: 13px 28px;
+
+      margin-top: clamp(22px, 4vh, 32px);
+
+      border: none;
+      border-radius: 3px;
+
+      background: var(--maroon);
+      color: #fff;
+
+      font-family: "Work Sans", sans-serif;
+      font-size: 0.85rem;
+
+      letter-spacing: 0.02em;
+
+      text-decoration: none;
+
+      cursor: pointer;
+
+      transition:
+        background 0.2s ease,
+        transform 0.15s ease;
+    }
+
+    .btn:hover {
+      background: var(--gold-deep);
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+
+    /* =========================================================
+       SCREEN 2 — GITA SHATABDI PARVA
+    ========================================================= */
+
+    #parva {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      /*
+        IMPORTANT:
+        Logo starts near the top of the second screen.
+      */
+
+      justify-content: flex-start;
+
+      text-align: center;
+
+      padding:
+        clamp(28px, 5vh, 55px) clamp(20px, 5vw, 48px) clamp(28px, 5vh, 55px);
+    }
+
+    .logo-box {
+      width: min(75vw, 300px);
+
+      /*
+        No giant margin-top anymore.
+      */
+      margin: 0 auto clamp(20px, 3vh, 25px);
+
+      flex-shrink: 0;
+    }
+
+    .logo-box img {
+      display: block;
+
+      width: 100%;
+      height: auto;
+
+      object-fit: contain;
+    }
+
+    .parva-title {
+      margin-top: -60px;
+      font-size: clamp(1.8rem, 6vw, 2.7rem);
+
+      line-height: 1.1;
+
+      font-weight: 600;
+
+      color: var(--maroon);
+
+      flex-shrink: 0;
+    }
+
+    .krishna-title {
+      margin-top: -90px;
+      font-size: clamp(1.8rem, 6vw, 2.7rem);
+
+      line-height: 1.1;
+
+      font-weight: 600;
+
+      color: var(--maroon);
+
+      flex-shrink: 0;
+    }
+
+    .parva-copy {
+      width: 100%;
+      max-width: 620px;
+
+      margin-top: clamp(16px, 2.5vh, 24px);
+
+      color: var(--ink);
+
+      /*
+    A serif face gives this a much more
+    traditional book / publication feeling.
+  */
+      font-family: "Cormorant Garamond", serif;
+
+      font-size: clamp(1.05rem, 2.4vw, 1.18rem);
+
+      line-height: 1.65;
+
+      /*
+    Book-style paragraph alignment
+  */
+      text-align: justify;
+
+      /*
+    Gives the text breathing room on mobile
+  */
+      padding: 0 4px;
+    }
+
+    .parva-copy p {
+      margin: 0;
+
+      /*
+    Traditional book paragraph indentation
+  */
+      text-indent: 1.5em;
+      font-size: 1rem;
+    }
+
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @media (max-width: 480px) {
+
+      .screen {
+        /*
+          Keep exactly one mobile screen.
+        */
+        min-height: 100svh;
+        height: 100svh;
+      }
+
+      #welcome {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+
+      .hero-image {
+        width: min(62vw, 250px);
+      }
+
+      .hero-title {
+        font-size: 2.15rem;
+      }
+
+      .welcome-copy {
+        font-size: 0.9rem;
+
+        line-height: 1.7;
+
+        max-width: 350px;
+      }
+
+      .btn {
+        min-width: 158px;
+      }
+
+
+      /* SECOND SCREEN */
+
+      #parva {
+        padding-top: 28px;
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+
+      .logo-box {
+        width: min(60vw, 300px);
+        margin-bottom: 20px;
+      }
+
+      .parva-title {
+        font-size: 2rem;
+      }
+
+      .krishna-title {
+        font-size: 2rem;
+      }
+
+      .parva-copy {
+        max-width: 350px;
+
+        margin-top: 14px;
+
+        font-size: 1rem;
+
+        line-height: 1.62;
+
+        text-align: justify;
+
+        padding: 0;
+      }
+
+      .parva-copy p {
+        text-indent: 1.4em;
+      }
+    }
+
+
+    /* =========================================================
+       VERY SMALL PHONES
+    ========================================================= */
+
+    @media (max-height: 700px) {
+
+      #welcome {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      .hero-image {
+        width: min(48vw, 210px);
+      }
+
+      .hero-title {
+        margin-top: 14px;
+
+        font-size: 1.9rem;
+      }
+
+      .welcome-copy {
+        margin-top: 12px;
+
+        font-size: 0.84rem;
+
+        line-height: 1.6;
+      }
+
+      .btn {
+        margin-top: 18px;
+      }
+
+
+      #parva {
+        padding-top: 20px;
+        padding-bottom: 20px;
+      }
+
+      .logo-box {
+        width: min(70vw, 200px);
+
+        margin-bottom: 14px;
+      }
+
+      .parva-title {
+        font-size: 1.8rem;
+      }
+
+      .krishna-title {
+        font-size: 1.8rem;
+      }
+
+      .parva-copy {
+        margin-top: 10px;
+
+        font-size: 0.82rem;
+
+        line-height: 1.55;
+      }
+    }
+
+
+    /* =========================================================
+       REDUCED MOTION
+    ========================================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      html {
+        scroll-behavior: auto;
+        scroll-snap-type: none;
+        overscroll-behavior-y: contain;
+      }
+
+      .loader-figure,
+      .star,
+      .loader-caption,
+      .hero-glow-wrap {
+        animation: none;
+      }
+
+      .loader-caption,
+      .hero-glow-wrap {
+        opacity: 1;
+      }
+    }
+
+
+    /* ================= GITA BOOK SECTION ================= */
+
+    #gita-book {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(28px, 5vh, 55px) clamp(20px, 5vw, 48px);
+      gap: 4px;
+    }
+
+    .zoomable {
+      display: block;
+      margin: 0 auto;
+      width: min(72vw, 320px);
+      border-radius: 6px;
+      box-shadow: 0 14px 30px rgba(50, 30, 10, 0.18);
+      cursor: zoom-in;
+      transition: transform 0.25s ease;
+    }
+
+    .zoomable:hover {
+      transform: translateY(-3px);
+    }
+
+    .zoom-hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 8px;
+      margin-bottom: 100px;
+    }
+
+    .action-stack {
+      margin-top: clamp(10px, 4vh, 10px);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .action-btn {
+      width: 100%;
+      max-width: 320px;
+      background: #fff;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-family: 'Work Sans', sans-serif;
+      font-size: 0.9rem;
+      padding: 15px 18px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .action-btn:hover {
+      border-color: var(--gold);
+      background: #FFFDF9;
+    }
+
+    .action-btn:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    .action-btn .chev {
+      transition: transform 0.3s ease;
+      color: var(--gold);
+    }
+
+    .action-btn[aria-expanded="true"] .chev {
+      transform: rotate(180deg);
+    }
+
+    /* video accordion */
+    .video-panel {
+      max-width: 320px;
+      width: 100%;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.45s ease;
+    }
+
+    .video-panel.open {
+      max-height: 260px;
+    }
+
+    .video-inner {
+      padding-top: 12px;
+    }
+
+    .video-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #eee2c9;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .video-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* scroll unfurl */
+    .scroll-panel {
+      max-width: 320px;
+      width: 100%;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.55s ease;
+    }
+
+    .scroll-panel.open {
+      max-height: 420px;
+    }
+
+    .scroll-inner {
+      padding-top: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .scroll-dowel {
+      width: 100%;
+      height: 14px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #7a5a2c, #c9a35c, #7a5a2c);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    .scroll-paper {
+      width: 92%;
+      background: repeating-linear-gradient(#f4e8c8, #f4e8c8 2px, #efdfb9 2px, #efdfb9 3px);
+      background-color: #f2e4c1;
+      padding: 18px 20px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #4a3620;
+      text-align: left;
+      box-shadow: inset 0 0 18px rgba(120, 90, 40, 0.15);
+    }
+
+    /* lightbox — shared by every painting from here on */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 10, 8, 0.94);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      padding: 20px;
+    }
+
+    #lightbox.open {
+      display: flex;
+    }
+
+    #lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    #lightbox .close-hint {
+      position: absolute;
+      top: 22px;
+      right: 22px;
+      color: #eee;
+      font-size: 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      padding: 7px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .painting-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(28px, 5vh, 55px) clamp(20px, 5vw, 48px);
+      gap: 4px;
+    }
+    #menuToggle {
+  position: fixed; top: max(18px, env(safe-area-inset-top)); right: 18px;
+  z-index: 600; background: none; border: none;
+  font-size: 1.4rem; color: var(--maroon); cursor: pointer;
+}
+#sideMenu {
+  justify-content: center;
+  position: fixed; inset: 0 0 0 auto; width: min(78vw, 300px);
+  background: #fff; z-index: 700;
+  transform: translateX(100%); transition: transform 0.3s ease;
+  display: flex; flex-direction: column; gap: 18px;
+  padding: max(24px, env(safe-area-inset-top)) 24px 24px;
+  box-shadow: -10px 0 30px rgba(0,0,0,0.15);
+}
+#sideMenu.open { transform: translateX(0); }
+#sideMenu a { color: var(--ink); text-decoration: none; font-size: 1rem; }
+.gallery-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding: clamp(28px, 5vh, 55px) clamp(20px, 5vw, 48px);
+  overflow-y: auto;   /* this screen can scroll internally if the grid runs tall */
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 420px;
+  margin: 18px 0 28px;
+}
+
+.gallery-thumb {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: zoom-in;
+  box-shadow: 0 6px 16px rgba(50,30,10,0.14);
+  transition: transform 0.2s ease;
+}
+.gallery-thumb:hover { transform: translateY(-2px); }
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =======================================================
+       LOADER
+  ======================================================== -->
+
+  <div id="loader">
+
+    <div class="star" style="top:18%; left:22%; animation-delay:0s;"></div>
+
+    <div class="star" style="top:30%; left:70%; animation-delay:0.4s;"></div>
+
+    <div class="star" style="top:60%; left:15%; animation-delay:0.8s;"></div>
+
+    <div class="star" style="top:70%; left:80%; animation-delay:1.2s;"></div>
+
+    <div class="star" style="top:15%; left:85%; animation-delay:0.6s;"></div>
+
+    <div class="star" style="top:80%; left:50%; animation-delay:1.6s;"></div>
+
+
+    <div class="loader-figure">
+
+      <img src="images/vishnu-loader.webp" alt="Vishnu resting on Ananta Shesha">
+
+    </div>
+
+
+    <p class="loader-caption">
+      in the stillness before the story begins
+    </p>
+
+  </div>
+
+
+
+  <!-- =======================================================
+       SCREEN 1 — WELCOME
+  ======================================================== -->
+
+  <section id="welcome" class="screen">
+
+    <div class="hero-glow-wrap">
+
+      <div class="hero-glow"></div>
+
+      <img class="hero-image" src="images/ganesh-hero.png" alt="Ganesh idol decorated for Ganesh Chaturthi">
+
+    </div>
+
+
+    <h1 class="hero-title">
+      Ganapati Bappa Morya!
+    </h1>
+
+
+    <p class="welcome-copy">
+
+      Walk through at your own pace —
+      <strong>
+        look at the paintings, read their stories, or just watch Amma explain each one.
+      </strong>
+
+      Totally up to you. Short and sweet, either way. Check the theme first, then explore the paintings.
+
+    </p>
+
+
+    <!--
+      No JavaScript needed.
+
+      This simply jumps smoothly to the next full-screen section.
+    -->
+
+    <a href="#parva" class="btn">
+      Learn the theme
+    </a>
+
+  </section>
+
+
+
+  <!-- =======================================================
+       SCREEN 2 — GITA SHATABDI PARVA
+  ======================================================== -->
+
+  <section id="parva" class="screen">
+
+    <div class="logo-box">
+
+      <img src="images/gita-press-logo.png" alt="Gita Press logo">
+
+    </div>
+
+
+    <h2 class="parva-title">
+      Gita Shatabdi Parva
+    </h2>
+
+
+    <div class="parva-copy">
+
+      <p class="parva-copy">
+
+        <b>Gita Shatabdi Parva</b> celebrates a century of Kalyan, the revered spiritual and cultural magazine of Gita
+        Press.
+        First published in 1926, <b>Kalyan</b> has, for a hundred years, carried the timeless wisdom of Sanatana Dharma,
+        reaching generations through its writings on devotion, knowledge, dharma and righteous living. As the magazine
+        completes its centenary in 2026, we honour this remarkable journey and the enduring legacy of Gita Press.
+        This century of service also stands alongside Gita Press’s recognition with the <b>Gandhi Peace Prize for
+          2021</b>,
+        acknowledging its contribution to peace, social harmony and the preservation of India’s spiritual heritage.
+
+
+      </p>
+
+    </div>
+
+    <a href="#gita-book" class="btn">
+      Begin the walk
+    </a>
+
+  </section>
+
+  <section id="gita-book" class="screen">
+
+    <img class="zoomable" id="gitaBookImg" src="images/gita-book-half.JPG" data-full="images/gita-book-full.JPG"
+      alt="Krishna and Arjuna, from the Bhagavad Gita painting" onclick="openLightbox(this.dataset.full)">
+    <p class="zoom-hint">tap to see the full painting</p>
+
+    <h2 class="parva-title">The Bhagavad Gita</h2>
+
+    <div class="action-stack">
+      <button class="action-btn" aria-expanded="false" onclick="toggleVideo(this, 'VIDEO_ID_1')">
+        <span>Watch Amma explain</span>
+        <span class="chev">⌄</span>
+      </button>
+      <div class="video-panel" id="videoPanel">
+        <div class="video-inner">
+          <div class="video-frame" id="videoFrame"></div>
+        </div>
+      </div>
+
+      <button class="action-btn" aria-expanded="false" onclick="toggleStory(this)">
+        <span>Read the story</span>
+        <span class="chev">⌄</span>
+      </button>
+      <div class="scroll-panel" id="storyPanel">
+        <div class="scroll-inner">
+          <div class="scroll-dowel"></div>
+          <div class="scroll-paper">
+            <p>
+              The <b>Bhagavad Gita</b>, the timeless dialogue between Sri Krishna and Arjuna,
+              has found its way into countless homes through Gita Press. With </b>over 16 crore copies</b> published,
+              it remains the Press’s most widely circulated work. For generations, the Gita Press edition has
+              been a familiar presence in Indian households, carrying the eternal message of dharma, wisdom and
+              devotion from one generation to the next.
+
+            </p>
+          </div>
+          <div class="scroll-dowel"></div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#krishna-arjuna" class="btn">
+      Continue the walk
+    </a>
+
+  </section>
+
+  <section id="krishna-arjuna" class="screen painting-section">
+
+    <img class="zoomable" src="images/krishna-arjuna.jpg" data-full="images/krishna-arjuna-full.jpg"
+      alt="Krishna and Arjuna painting" onclick="openLightbox(this.dataset.full)">
+    <p class="zoom-hint">tap to see the full painting</p>
+
+    <h2 class="krishna-title">Krishna &amp; Arjuna</h2>
+
+    <div class="action-stack">
+      <button class="action-btn" aria-expanded="false" onclick="toggleVideo(this, 'VIDEO_ID_2')">
+        <span>Watch Amma explain</span>
+        <span class="chev">⌄</span>
+      </button>
+      <div class="video-panel">
+        <div class="video-inner">
+          <div class="video-frame"></div>
+        </div>
+      </div>
+
+      <button class="action-btn" aria-expanded="false" onclick="toggleStory(this)">
+        <span>Read the story</span>
+        <span class="chev">⌄</span>
+      </button>
+      <div class="scroll-panel">
+        <div class="scroll-inner">
+          <div class="scroll-dowel"></div>
+          <div class="scroll-paper">
+            <p>
+              When Bhishma’s attack overwhelmed the Pandava army, Krishna rose in fury,
+              lifting a broken chariot wheel despite His vow not to wield a weapon. As He charged toward Bhishma,
+              Arjuna held Him back, reminding Krishna of His sacred vow. Bhishma, filled with devotion,
+              welcomed the sight of the Lord rushing toward him.
+            </p>
+          </div>
+          <div class="scroll-dowel"></div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#sheshashayi-vishnu" class="btn">
+      Continue the walk
+    </a>
+
+  </section>
+
+  </section>
+
+  <section id="sheshashayi-vishnu" class="screen painting-section">
+
+    <img class="zoomable" src="images/vishnu-loader.webp" data-full="images/sheshashayi-vishnu.jpg"
+      alt="Sheshashayi Vishnu, resting on Ananta Shesha" onclick="openLightbox(this.dataset.full)">
+    <p class="zoom-hint">tap to see the full painting</p>
+
+    <h2 class="parva-title">Sheshashayi Vishnu</h2>
+
+    <div class="action-stack">
+      <button class="action-btn" aria-expanded="false" onclick="toggleStory(this)">
+        <span>Read the story</span>
+        <span class="chev">⌄</span>
+      </button>
+      <div class="scroll-panel">
+        <div class="scroll-inner">
+          <div class="scroll-dowel"></div>
+          <div class="scroll-paper">
+            <p>
+              Upon the boundless cosmic ocean, where all creation lies in silence,
+              <b>Lord Vishnu rests upon the thousand-hooded serpent Shesha</b>, the eternal
+              protector of the universe. From His divine navel rises a magnificent lotus,
+              blossoming above the primordial waters. Seated upon it appears <b>Lord Brahma</b>,
+              destined to bring forth the worlds, beings and all of creation. Thus, from the serene
+              and eternal presence of <b>Narayana</b>, the cycle of creation begins—born from the divine,
+              sustained by the divine, and destined to return to the divine.
+            </p>
+          </div>
+          <div class="scroll-dowel"></div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#ganesha-painting" class="btn">
+      Continue the walk
+    </a>
+
+  </section>
+
+  <section id="ganesha-painting" class="screen painting-section">
+
+    <img class="zoomable" src="images/ganesha-half.jpg" data-full="images/ganesha-full.jpg" alt="Lord Ganesha painting"
+      onclick="openLightbox(this.dataset.full)">
+    <p class="zoom-hint">tap to see the full painting</p>
+
+    <h2 class="parva-title">Lord Ganesha</h2>
+
+    <div class="action-stack">
+      <button class="action-btn" aria-expanded="false" onclick="toggleStory(this)">
+        <span>Read the story</span>
+        <span class="chev">⌄</span>
+      </button>
+      <div class="scroll-panel">
+        <div class="scroll-inner">
+          <div class="scroll-dowel"></div>
+          <div class="scroll-paper">
+            When Sage Vyasa resolved to narrate the vast and timeless <b>Mahabharata</b>,
+            he sought a scribe capable of recording his words without pause. Lord Ganesha agreed,
+            but placed a condition: Vyasa must narrate continuously, without stopping. Vyasa accepted,
+            with a condition of his own—that Ganesha must understand every verse completely before writing it.
+            And so began a divine feat of endurance and wisdom: as Vyasa poured forth the epic,
+            Ganesha's pen raced across the pages, preserving the story of kings, warriors,
+            dharma and destiny for all generations to come.
+          </div>
+          <div class="scroll-dowel"></div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#virat-roopa" class="btn">
+      Continue the walk
+    </a>
+
+  </section>
+
+  <section id="virat-roopa" class="screen painting-section">
+
+    <img class="zoomable" src="images/virat-roop-half.JPG" data-full="images/virat-roop-full.JPG" alt="ALT_TEXT"
+      onclick="openLightbox(this.dataset.full)">
+    <p class="zoom-hint">tap to see the full painting</p>
+
+    <h2 class="parva-title">Virat Roop</h2>
+
+    <div class="action-stack">
+      <button class="action-btn" aria-expanded="false" onclick="toggleVideo(this, 'VIDEO_ID')">
+        <span>Watch Amma explain</span>
+        <span class="chev">⌄</span>
+      </button>
+      <div class="video-panel">
+        <div class="video-inner">
+          <div class="video-frame"></div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#krishna-cow" class="btn">
+      Continue the walk
+    </a>
+
+  </section>
+
+  <section id="krishna-cow" class="screen painting-section">
+
+  <img
+    class="zoomable"
+    src="images/krishna-cow-full.JPG"
+    data-full="images/krishna-cow-half.JPG"
+    alt="Krishna and the Cows"
+    onclick="openLightbox(this.dataset.full)"
+    onerror="this.replaceWith(Object.assign(document.createElement('div'), {className:'zoomable', style:'display:flex;align-items:center;justify-content:center;aspect-ratio:3/4;background:#fff;border:1px dashed var(--line);color:var(--muted);font-size:0.8rem;', textContent:'TITLE painting — placeholder'}))"
+  >
+  <p class="zoom-hint">tap to see the full painting</p>
+
+  <h2 class="parva-title">Krishna and the Cows</h2>
+
+  <div class="action-stack">
+    <button class="action-btn" aria-expanded="false" onclick="toggleVideo(this, 'VIDEO_ID')">
+      <span>Watch Amma explain</span>
+      <span class="chev">⌄</span>
+    </button>
+    <div class="video-panel">
+      <div class="video-inner">
+        <div class="video-frame"></div>
+      </div>
+    </div>
+
+    <button class="action-btn" aria-expanded="false" onclick="toggleStory(this)">
+      <span>Read the story</span>
+      <span class="chev">⌄</span>
+    </button>
+    <div class="scroll-panel">
+      <div class="scroll-inner">
+        <div class="scroll-dowel"></div>
+        <div class="scroll-paper">
+          <p>In the sacred pastures of Vrindavan, <b>Sri Krishna</b> spent His days among the cows, 
+            lovingly tending them and enchanting them with His flute. The Vedas hold the cow in deep reverence, 
+            describing her as a symbol of nourishment, abundance and sacredness. Thus, Krishna’s bond with the cows 
+            reflects the timeless Vedic ideal of compassion, protection and harmony with all creation.</p>
+        </div>
+        <div class="scroll-dowel"></div>
+      </div>
+    </div>
+  </div>
+
+  <a href="#go-raksha" class="btn">
+    Continue the walk
+  </a>
+
+</section>
+
+<section id="go-raksha" class="screen painting-section">
+
+  <img
+    class="zoomable"
+    src="images/go_raksha.JPG"
+    data-full="images/go_raksha.JPG"
+    alt="ALT_TEXT"
+    onclick="openLightbox(this.dataset.full)"
+    onerror="this.replaceWith(Object.assign(document.createElement('div'), {className:'zoomable', style:'display:flex;align-items:center;justify-content:center;aspect-ratio:3/4;background:#fff;border:1px dashed var(--line);color:var(--muted);font-size:0.8rem;', textContent:'TITLE painting — placeholder'}))"
+  >
+  <p class="zoom-hint">tap to see the full painting</p>
+
+  <h2 class="parva-title">Go Raksha, Rashtra Raksha</h2>
+
+  <div class="action-stack">
+    <button class="action-btn" aria-expanded="false" onclick="toggleVideo(this, 'VIDEO_ID')">
+      <span>Watch Amma explain</span>
+      <span class="chev">⌄</span>
+    </button>
+    <div class="video-panel">
+      <div class="video-inner">
+        <div class="video-frame"></div>
+      </div>
+    </div>
+
+    <button class="action-btn" aria-expanded="false" onclick="toggleStory(this)">
+      <span>Read the story</span>
+      <span class="chev">⌄</span>
+    </button>
+    <div class="scroll-panel">
+      <div class="scroll-inner">
+        <div class="scroll-dowel"></div>
+        <div class="scroll-paper">
+          <p>In our tradition, the cow is revered as a symbol of <b>nourishment, 
+            compassion and selfless giving</b>. From the days of Krishna in Vrindavan, 
+            caring for and protecting cows has been seen as an act of <b>seva</b>. Today, 
+            this spirit can live on through small acts of kindness—offering food, supporting 
+            a goshala, or helping a cow in need. Every contribution, however small, can become 
+            meaningful when offered with sincerity. <b>If you have the opportunity to support the 
+            protection and care of cows, do so wherever you can.</b> In serving them, we honour a timeless 
+            tradition of compassion and gratitude.
+          </p>
+        </div>
+        <div class="scroll-dowel"></div>
+      </div>
+    </div>
+  </div>
+
+  <a href="guestbook" class="btn">
+    End the walk
+  </a>
+
+</section>
+<!-- fixed menu trigger — add once, right after <body> -->
+<button id="menuToggle" onclick="document.getElementById('sideMenu').classList.toggle('open')" aria-label="Open menu">☰</button>
+
+<div id="sideMenu">
+  <button onclick="document.getElementById('sideMenu').classList.remove('open')" aria-label="Close menu">✕</button>
+  <a href="#gallery">Gallery</a>
+  <a href="web-ready.zip" download>Download all photos</a>
+  <a href="#guestbook">Leave a note</a>
+</div>
+
+<section id="guestbook" class="screen painting-section">
+  <h2 class="parva-title">Leave a Note</h2>
+  <p class="welcome-copy">Wishes, thoughts, anything you'd like to share.</p>
+
+  <form name="guestbook" method="POST" data-netlify="true" class="action-stack" style="max-width:320px;">
+    <input type="hidden" name="form-name" value="guestbook" />
+    <input type="text" name="name" placeholder="Your name (optional)" style="width:100%;padding:13px;border:1px solid var(--line);border-radius:6px;font-family:'Work Sans',sans-serif;" />
+    <textarea name="message" placeholder="Your note" required rows="4" style="width:100%;padding:13px;border:1px solid var(--line);border-radius:6px;font-family:'Work Sans',sans-serif;"></textarea>
+    <button type="submit" class="btn">Send</button>
+  </form>
+</section>
+
+<section id="gallery" class="screen gallery-section">
+
+  <h2 class="parva-title">Gallery</h2>
+
+  <p class="welcome-copy gallery-intro">
+    Tap any painting to see it full size.
+  </p>
+
+  <div class="gallery-grid" id="galleryGrid"></div>
+
+  <a href="web-ready.zip" download class="btn">
+    Download all photos
+  </a>
+
+</section>
+
+  <script>
+
+    window.addEventListener("load", () => {
+
+      setTimeout(() => {
+
+        const loader = document.getElementById("loader");
+
+        if (loader) {
+          loader.classList.add("hidden");
+        }
+
+      }, 2400);
+
+    });
+
+  </script>
+  <script>
+
+    const screens = Array.from(
+      document.querySelectorAll(".screen")
+    );
+
+    let currentScreen = 0;
+    let isScrolling = false;
+
+    function goToScreen(index) {
+
+      if (index < 0 || index >= screens.length) {
+        return;
+      }
+
+      currentScreen = index;
+      isScrolling = true;
+
+      screens[index].scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+      setTimeout(() => {
+        isScrolling = false;
+      }, 750);
+    }
+
+    window.addEventListener(
+      "wheel",
+      (event) => {
+
+        if (isScrolling) {
+          event.preventDefault();
+          return;
+        }
+        if (Math.abs(event.deltaY) < 20) {
+          return;
+        }
+
+        event.preventDefault();
+
+        if (event.deltaY > 0) {
+          goToScreen(currentScreen + 1);
+        } else {
+          goToScreen(currentScreen - 1);
+        }
+
+      },
+      { passive: false }
+    );
+
+    window.addEventListener("scroll", () => {
+
+      if (isScrolling) {
+        return;
+      }
+
+      const viewportHeight = window.innerHeight;
+
+      let closest = 0;
+      let smallestDistance = Infinity;
+
+      screens.forEach((screen, index) => {
+
+        const distance = Math.abs(
+          screen.getBoundingClientRect().top
+        );
+
+        if (distance < smallestDistance) {
+          smallestDistance = distance;
+          closest = index;
+        }
+
+      });
+
+      currentScreen = closest;
+
+    });
+
+    let touchStartY = 0;
+
+    window.addEventListener(
+      "touchstart",
+      (event) => {
+
+        touchStartY = event.touches[0].clientY;
+
+      },
+      { passive: true }
+    );
+
+
+    window.addEventListener(
+      "touchend",
+      (event) => {
+
+        if (isScrolling) {
+          return;
+        }
+
+        const touchEndY = event.changedTouches[0].clientY;
+
+        const difference = touchStartY - touchEndY;
+
+        if (Math.abs(difference) < 50) {
+          return;
+        }
+
+        if (difference > 0) {
+          goToScreen(currentScreen + 1);
+
+        } else {
+          goToScreen(currentScreen - 1);
+        }
+
+      },
+      { passive: true }
+    );
+
+
+
+  </script>
+
+  <div id="lightbox" onclick="closeLightbox()">
+    <div class="close-hint">close ✕</div>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
+  <script>
+    function openLightbox(src) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightbox').classList.add('open');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+
+    function toggleVideo(btn, videoId) {
+
+      const stack = btn.closest(".action-stack");
+
+      if (!stack) return;
+
+      const panel = btn.nextElementSibling;
+
+      const storyBtn = stack.querySelector(
+        'button[onclick^="toggleStory"]'
+      );
+
+      const storyPanel = storyBtn
+        ? storyBtn.nextElementSibling
+        : null;
+
+      const open = !panel.classList.contains("open");
+
+      if (storyPanel) {
+        storyPanel.classList.remove("open");
+      }
+
+      if (storyBtn) {
+        storyBtn.setAttribute("aria-expanded", "false");
+      }
+
+      panel.classList.toggle("open", open);
+
+      btn.setAttribute("aria-expanded", open);
+
+      const frame = panel.querySelector(".video-frame");
+
+      if (open && frame && !frame.dataset.loaded) {
+
+        frame.innerHTML = `
+      <iframe
+        src="https://www.youtube.com/embed/${videoId}?rel=0"
+        title="Amma explains this painting"
+        allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
+    `;
+
+        frame.dataset.loaded = "1";
+      }
+    }
+
+
+    function toggleStory(btn) {
+
+      const stack = btn.closest(".action-stack");
+
+      if (!stack) return;
+
+      const panel = btn.nextElementSibling;
+
+      const videoBtn = stack.querySelector(
+        'button[onclick^="toggleVideo"]'
+      );
+
+      const videoPanel = videoBtn
+        ? videoBtn.nextElementSibling
+        : null;
+
+      const open = !panel.classList.contains("open");
+
+      if (videoPanel) {
+        videoPanel.classList.remove("open");
+      }
+
+      if (videoBtn) {
+        videoBtn.setAttribute("aria-expanded", "false");
+      }
+
+      panel.classList.toggle("open", open);
+
+      btn.setAttribute("aria-expanded", open);
+    }
+  </script>
+  <script>
+    const galleryGrid = document.getElementById("galleryGrid");
+
+for (let i = 1; i <= 67; i++) {
+
+  const number = String(i).padStart(2, "0");
+
+  const img = document.createElement("img");
+
+  img.className = "gallery-thumb";
+
+  img.src = `web-ready/DSC004${number}.webp`;
+  img.dataset.full = `web-ready/DSC004${number}.webp`;
+
+  img.alt = `Gallery painting ${i}`;
+
+  img.loading = "lazy";
+
+  img.onclick = () => {
+    openLightbox(img.dataset.full);
+  };
+
+  // If a photo doesn't exist, don't show an empty/broken image
+  img.onerror = () => {
+    img.remove();
+  };
+
+  galleryGrid.appendChild(img);
+}
+  </script>
+
+</body>
+
+</html>
