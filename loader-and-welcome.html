@@ -1332,8 +1332,7 @@
     <h2 class="parva-title">Leave a Note</h2>
     <p class="welcome-copy">Wishes, thoughts, anything you'd like to share.</p>
 
-    <form name="guestbook" method="POST" data-netlify="true" id="guestbookForm" class="action-stack"
-      style="max-width:320px;">
+    <form name="guestbook" method="POST" data-netlify="true" class="action-stack" style="max-width:320px;">
       <input type="hidden" name="form-name" value="guestbook" />
       <input type="text" name="name" placeholder="Your name (optional)"
         style="width:100%;padding:13px;border:1px solid var(--line);border-radius:6px;font-family:'Work Sans',sans-serif;" />
@@ -1341,8 +1340,6 @@
         style="width:100%;padding:13px;border:1px solid var(--line);border-radius:6px;font-family:'Work Sans',sans-serif;"></textarea>
       <button type="submit" class="btn">Send</button>
     </form>
-    <p id="guestbookThanks" style="display:none; color:var(--muted); margin-top:14px;">Thank you — your note has been
-      received. 🙏</p>
   </section>
 
   <section id="gallery" class="screen gallery-section">
@@ -1625,22 +1622,6 @@
 
       galleryGrid.appendChild(img);
     }
-  </script>
-  <script>
-    document.getElementById('guestbookForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const form = e.target;
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(new FormData(form)).toString()
-      })
-        .then(() => {
-          form.style.display = 'none';
-          document.getElementById('guestbookThanks').style.display = 'block';
-        })
-        .catch(() => alert('Something went wrong — please try again.'));
-    });
   </script>
 
 </body>
